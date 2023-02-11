@@ -1,7 +1,17 @@
 const router = require('express').Router()
 const places = require('../models/places.js')
 
-router.post ('/', (req,res) => {
+router.get ('/:id', (req,res) => {
+    let id = Number(req.params.id)
+    if (isNaN(id)) {
+        res.render('error404')
+    }
+    else if (!places[id]) {
+        res.render('error404')
+    }
+    else {
+        res.render('places/show', {place: places[id]})
+    }
     console.log(req.body)
     if (!req.body.pic) {
         // Default image if one is not provided
@@ -14,7 +24,7 @@ router.post ('/', (req,res) => {
         req.body.state = 'USA'
     }
     places.push(req.body)
-    res.redirect('/places')
+    res.render('places/show')
 })
 
 module.exports = router 
