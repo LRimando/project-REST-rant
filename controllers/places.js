@@ -11,7 +11,7 @@ router.get ('/:id', (req,res) => {
     }
     else {
         places.splice(id, 1)
-        res.redirect('/places')
+        res.render('places/edit', {place: places[id] })
     }
     console.log(req.body)
     if (!req.body.pic) {
